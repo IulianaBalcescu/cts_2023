@@ -1,44 +1,39 @@
 package ro.ase.cts.s02;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.Math;
 
-
-
-public class Calculator {
+ class CalculatorRefactored {
 
     public double calculatePowXPlusPowY() throws IOException {
-        try {
-            double result = 0.0;
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            System.out.print("Tastati valoare pentru X: ");
-            double x = Double.parseDouble(reader.readLine());
-
-            System.out.print("Tastati valoare pentru Y: ");
-            double y = Double.parseDouble(reader.readLine());
-
-            double xToThePowerOfFive = calculatePower(x, 5);
-            double yToThePowerOfSeven = calculatePower(y, 7);
-
-            result = xToThePowerOfFive + yToThePowerOfSeven;
-            return result;
-
-        } catch (NumberFormatException exception) {
-
-            System.out.println(exception.getMessage());
-            return -1;
-
-        }
+        double x = readDoubleValueFromConsole("Tastati valoare pentru X:");
+        double y = readDoubleValueFromConsole("Tastati valoare pentru Y:");
+        double xToThePowerOfFive = calculatePower(x, 5);
+        double yToThePowerOfSeven = calculatePower(y, 7);
+        double result = xToThePowerOfFive + yToThePowerOfSeven;
+        return result;
     }
 
-    private double calculatePower(double number, int exponent) {
-        double result = number;
-        for (int i = 1; i < exponent; i++) {
-            result *= number;
+    private double calculatePower(double base, int exponent) {
+        return Math.pow(base, exponent);
+    }
+
+    private double readDoubleValueFromConsole(String messageToShow)
+    {
+        try
+        {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            System.out.print(messageToShow);
+            return Double.parseDouble(reader.readLine());
         }
-        return result;
+        catch (NumberFormatException | IOException exception)
+        {
+            System.out.println(exception.getMessage());
+            if(exception.getMessage().contains("#STOP"))
+                System.exit(-1);
+            return readDoubleValueFromConsole(messageToShow);
+        }
     }
 }
 //in cazul valorilor non-numerice se reia procesul de citire

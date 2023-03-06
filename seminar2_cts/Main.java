@@ -5,12 +5,15 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        Calculator calculator = new Calculator();
+        CalculatorRefactored calculator = new CalculatorRefactored();
         double result = calculator.calculatePowXPlusPowY();
         System.out.println("Rezultatul este: " + result);
 
 
+
         MatrixDataHandler mH = new MatrixDataHandler(5, 7, "matrix.txt");
-        mH.modifyValueAndUpdateFile("matrix.txt", 3, 4, 345);
+        mH.modifyValueAndUpdateFile(3, 3, 4);
     }
+
+
 }
